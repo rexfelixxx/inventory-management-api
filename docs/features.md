@@ -1,8 +1,8 @@
 # FEATURES LIST
 ## Table of Contents
-1. [Login](#1. login)
-2. [Auth](#2. auth)
-3. [Users](#3. users)
+1. [Login](#1-login)
+2. [Auth](#2-auth)
+3. [Users](#3-users)
 
 # 1. Login
 - URI: /login
