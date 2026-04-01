@@ -13,41 +13,49 @@ class UsersController
         $name = $input['name'] ?? null;
         $password = $input['password'] ?? null;
         if ((empty($name) or empty($password))) {
-          Responser::bad();
+            Responser::bad();
         }
 
         $user = Users::getUser($name, $password);
 
         if (! $user) {
-          Responser::bad();
+            Responser::bad();
         }
 
         if (password_verify($password, $user['password'])) {
-          $existingToken = Tokens::get($user['id']);
-          $token = Auther::generateToken();
-          if(empty($existingToken)){
-            Tokens::new($token, $user['id']);
-          }else{
-            Tokens::update($existingToken['id'], $token);
-          }
-          Responser::ok(['token' => $token]);
+            $existingToken = Tokens::get($user['id']);
+            $token = Auther::generateToken();
+            if (empty($existingToken)) {
+                Tokens::create($token, $user['id']);
+            } else {
+                Tokens::update($existingToken['id'], $token);
+            }
+            Responser::ok(['token' => $token]);
         } else {
-          Responser::bad();
+            Responser::bad();
         }
     }
 
     public static function users()
     {
+        $role = self::auth() ?? null;
+        if (empty($role)) {
+            Responser::bad();
+        }
         $users = Users::getAll();
         Responser::ok($users);
     }
 
-    public static function auth(){
-        $input = json_decode(file_get_contents('php://input'), true);
-        $token = $input['token'] ?? null;
-        if(empty($token))Responser::bad();
-        $existingToken = Tokens::get(null, $token);
-        if($existingToken)Responser::ok();
+    public static function auth()
+    {
+        $token = Auther::getBearerToken();
+        if (empty($token)) {
+            Responser::bad();
+        }
+        $existingToken = Tokens::getUser($token);
+        if ($existingToken) {
+            Responser::ok($existingToken);
+        }
         Responser::bad();
     }
 }
