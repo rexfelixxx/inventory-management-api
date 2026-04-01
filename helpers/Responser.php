@@ -12,13 +12,18 @@ class Responser
         exit;
     }
 
-    public static function ok($data = null){
-      self::return_response(200, "ok", $data);
+    public static function ok($data = null)
+    {
+        self::return_response(200, 'ok', $data);
     }
-    public static function bad($data = null){
-      self::return_response(400, "bad request", $data);
+
+    public static function bad($data = null)
+    {
+        self::return_response(400, 'bad request', $data);
     }
-    public static function custom($code, $status, $data){
-      self::return_response($code, $status, $data); 
+
+    public static function custom($code, $status, $data)
+    {
+        self::return_response($code, $status, $data);
     }
 }
