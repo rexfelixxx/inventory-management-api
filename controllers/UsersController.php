@@ -4,14 +4,15 @@ require_once 'models/Users.php';
 require_once 'helpers/Responser.php';
 require_once 'helpers/Auther.php';
 require_once 'models/Tokens.php';
+require_once 'helpers/Inputter.php';
 
 class UsersController
 {
     public static function login()
     {
-        $input = json_decode(file_get_contents('php://input'), true);
-        $name = $input['name'] ?? null;
-        $password = $input['password'] ?? null;
+        $input = Inputter::getInput();
+        $name = $input->name ?? null;
+        $password = $input->password ?? null;
         if ((empty($name) or empty($password))) {
             Responser::bad();
         }
