@@ -1,8 +1,8 @@
 # INVENTORY MANAGEMENT API
 
 ## Overview
-A small inventory management API made personally by [rexfelixxx](https://github.com/rexfelixxx)
-see the technical documentation at [docs](docs/)
+API simpel yang dibuat dengan penuh cinta oleh [rexfelixxx](https://github.com/rexfelixxx)
+ini adalah dokumentasi umum, untuk dokumentasi teknis silahkan lihat [docs](docs/main.md).
 
 ## Features
 - Login
@@ -21,9 +21,12 @@ see the technical documentation at [docs](docs/)
 - Jalankan server PHP milikmu
 
 ## Usage
-Kamu bisa menggunakan program ini setelah menjalanknnya.Karena program ini hanyalah API, kamu perlu membuat interface sendiri / menggunakan API tester seperti Postman dan Hopscotch.
+Kamu bisa menggunakan program ini setelah menjalankannya.Karena program ini hanyalah API, kamu perlu membuat interface sendiri / menggunakan API tester seperti Postman dan Hopscotch.
 see [docs/api-usage.php](docs/api-usage.php)
 
 ## Folder Structure
-- routes/ -> routing
-- controllers/ -> logical execution
+- **routes/** -> routing
+- **controllers/** -> implementasi logika
+- **models/** -> implementasi pengolahan database
+- **configs/** -> file-file konfigurasi
+- **helpers/** -> alat-alat

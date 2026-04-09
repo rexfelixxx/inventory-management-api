@@ -11,10 +11,20 @@ class Users
         return $account;
     }
 
-    public static function getAll()
+    public static function all()
     {
-        $data = Databaser::runQuery('SELECT * FROM users');
+        $stmt = Databaser::runQuery('SELECT * FROM users');
 
-        return $data;
+        return $stmt;
+    }
+
+    public static function create($name, $password, $role = 'staff'){
+      $stmt = Databaser::runQuery('INSERT INTO users(name, password, role) VALUES(?, ?, ?)',[$name, $password, $role]);
+      return $stmt->rowCount();
+    }
+
+    public static function delete($id){
+      $stmt = Databaser::runQuery('DELETE FROM users WHERE id = ?', [$id]);
+      return $stmt->rowCount();
     }
 }

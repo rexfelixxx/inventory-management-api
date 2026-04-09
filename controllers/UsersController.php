@@ -43,7 +43,7 @@ class UsersController
         if (empty($role)) {
             Responser::bad();
         }
-        $users = Users::getAll();
+        $users = Users::all();
         Responser::ok($users);
     }
 
@@ -58,5 +58,17 @@ class UsersController
             Responser::ok($existingToken);
         }
         Responser::bad();
+    }
+
+    public static function create(){
+        $input = Inputter::getInput();
+        Users::create($input->name, password_hash($input->password, PASSWORD_DEFAULT), $input->role ?? 'staff');
+        Responser::ok(['message' => 'user created']);
+    }
+
+    public static function delete(){
+      $input = Inputter::getInput();
+      $stmt = Users::delete($input->id);
+      Responser::ok(['message' => 'user deleted', 'data' => $stmt]);
     }
 }
