@@ -39,10 +39,6 @@ class UsersController
 
     public static function users()
     {
-        $role = self::auth() ?? null;
-        if (empty($role)) {
-            Responser::bad();
-        }
         $users = Users::all();
         Responser::ok($users);
     }

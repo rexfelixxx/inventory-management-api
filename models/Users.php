@@ -14,8 +14,9 @@ class Users
     public static function all()
     {
         $stmt = Databaser::runQuery('SELECT * FROM users');
+        
 
-        return $stmt;
+        return $stmt->fetchAll();
     }
 
     public static function create($name, $password, $role = 'staff'){
