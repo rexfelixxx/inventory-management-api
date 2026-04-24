@@ -56,17 +56,23 @@ class UsersController
         Responser::bad();
     }
 
-    public static function create(){
+    public static function create()
+    {
         $input = Inputter::getInput();
         $stmt = Users::create($input->name, password_hash($input->password, PASSWORD_DEFAULT), $input->role ?? 'staff');
-        if($stmt > 0) Responser::ok(["message" => "user successfully created"]);
-        Responser::bad(["message"=>"cannot create user"]);
+        if ($stmt > 0) {
+            Responser::ok(['message' => 'user successfully created']);
+        }
+        Responser::bad(['message' => 'cannot create user']);
     }
 
-    public static function delete(){
-      $input = Inputter::getInput();
-      $stmt = Users::delete($input->id);
-      if($stmt > 0) Responser::ok(["message" => "user successfully deleted"]);
-      Responser::bad(["message"=>"user not found"]);
+    public static function delete()
+    {
+        $input = Inputter::getInput();
+        $stmt = Users::delete($input->id);
+        if ($stmt > 0) {
+            Responser::ok(['message' => 'user successfully deleted']);
+        }
+        Responser::bad(['message' => 'user not found']);
     }
 }
