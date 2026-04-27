@@ -47,3 +47,31 @@ menghapus user
 > [!NOTE]
 > Status akan menjadi "bad request" dengan kode 400 jika user dengan tersebut tidak ditemukan.
 
+### POST
+mengambil user berdasarkan id
+**request:**
+```json
+{
+    "id": "1"
+}
+```
+> [!NOTE]
+> - id: id user
+
+**response:**
+```json
+{
+  "status": "ok",
+  "data": {
+    "id": 1,
+    "name": "username",
+    "password": "password123",
+    "role": "admin",
+    "created_at": "2026-03-18 07:48:29"
+  }
+}
+```
+> [!NOTE]
+> Status akan menjadi "bad request" dengan kode 400 jika user dengan tersebut tidak ditemukan.
+
+

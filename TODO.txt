@@ -1,4 +1,2 @@
 TODO
-- [] Membuat controlller untuk /user [POST] yang akan mengambil user sesuai id / name yang di input client.
-- [] Membuat dokumentasinya
-- [] Meimashkan fungsi login dan auth ke LoginControllers.php agar lebih rapi.
+- [] Memimashkan fungsi auth ke LoginControllers.php agar lebih rapi.

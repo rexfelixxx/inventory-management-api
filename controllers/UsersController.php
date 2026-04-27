@@ -8,39 +8,19 @@ require_once 'helpers/Inputter.php';
 
 class UsersController
 {
-    public static function login()
-    {
-        $input = Inputter::getInput();
-        $name = $input->name ?? null;
-        $password = $input->password ?? null;
-        if ((empty($name) or empty($password))) {
-            Responser::bad();
-        }
-
-        $user = Users::getUser($name, $password);
-
-        if (! $user) {
-            Responser::bad();
-        }
-
-        if (password_verify($password, $user['password'])) {
-            $existingToken = Tokens::get($user['id']);
-            $token = Auther::generateToken();
-            if (empty($existingToken)) {
-                Tokens::create($token, $user['id']);
-            } else {
-                Tokens::update($existingToken['id'], $token);
-            }
-            Responser::ok(['token' => $token]);
-        } else {
-            Responser::bad();
-        }
-    }
+    
 
     public static function users()
     {
         $users = Users::all();
         Responser::ok($users);
+    }
+
+    public static function getUser(){
+      $input = Inputter::getInput();
+      $stmt = Users::getUser($input->id, null);
+      if(empty($stmt)) Responser::bad();
+      Responser::ok($stmt);
     }
 
     public static function auth()

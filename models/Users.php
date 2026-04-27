@@ -7,10 +7,10 @@ class Users
     public static function getUser($id, $name)
     {
         if (empty($id)) {
-            return Databaser::runQuery('SELECT * FROM users WHERE BINARY name = ?', [$name]);
+            return Databaser::runQuery('SELECT * FROM users WHERE BINARY name = ?', [$name])->fetch();
         }
 
-        return Databaser::runQuery('SELECT * FROM users WHERE BINARY id = ?', [$id]);
+        return Databaser::runQuery('SELECT * FROM users WHERE BINARY id = ?', [$id])->fetch();
     }
 
     public static function all()
