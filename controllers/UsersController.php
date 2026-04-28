@@ -8,40 +8,29 @@ require_once 'helpers/Inputter.php';
 
 class UsersController
 {
-    
-
     public static function users()
     {
         $users = Users::all();
         Responser::ok($users);
     }
 
-    public static function getUser(){
-      $input = Inputter::getInput();
-      $stmt = Users::getUser($input->id, null);
-      if(empty($stmt)) Responser::bad();
-      Responser::ok($stmt);
-    }
-
-    public static function auth()
+    public static function getUser()
     {
-        $token = Auther::getBearerToken();
-        if (empty($token)) {
+        $input = Inputter::getInput();
+        $stmt = Users::getUser($input->id, null);
+        if (empty($stmt)) {
             Responser::bad();
         }
-        $existingToken = Tokens::getUser($token);
-        if ($existingToken) {
-            Responser::ok($existingToken);
-        }
-        Responser::bad();
+        Responser::ok($stmt);
     }
 
     public static function create()
     {
+        $role = AuthControllers::auth();
         $input = Inputter::getInput();
         $stmt = Users::create($input->name, password_hash($input->password, PASSWORD_DEFAULT), $input->role ?? 'staff');
         if ($stmt > 0) {
-            Responser::ok(['message' => 'user successfully created']);
+            Responser::ok(['message' => 'user successfully created', 'role' => $role]);
         }
         Responser::bad(['message' => 'cannot create user']);
     }

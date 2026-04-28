@@ -1,2 +1,7 @@
 TODO
-- [] Memimashkan fungsi auth ke LoginControllers.php agar lebih rapi.
+- mendokoumentasikan fungsi login dan auth dari AuthController.php
+- mendokumentasikan helpers/Responser.php
+- mendokumentasikan helpers/Auther.php
+- mendokumentasikan helpers/Databaser.php
+- mendokumentasikan helpers/Inputter.php
+- mendokumentasikan helpers/Router.php
