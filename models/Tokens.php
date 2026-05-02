@@ -12,10 +12,10 @@ class Tokens
     public static function get($user_id, $token = null)
     {
         if (isset($user_id)) {
-            return Databaser::runQuery('SELECT * FROM tokens WHERE user_id = ?', [$user_id]);
+            return Databaser::runQuery('SELECT * FROM tokens WHERE user_id = ?', [$user_id])->fetch();
         }
         if (isset($token)) {
-            return Databaser::runQuery('SELECT * FROM tokens WHERE token = ?', [$token]);
+            return Databaser::runQuery('SELECT * FROM tokens WHERE token = ?', [$token])->fetch();
         }
     }
 
@@ -26,6 +26,6 @@ class Tokens
 
     public static function getUser($token)
     {
-        return Databaser::runQuery('SELECT users.role FROM users INNER JOIN tokens ON users.id WHERE token = ?', [$token]);
+        return Databaser::runQuery('SELECT users.role FROM users INNER JOIN tokens ON users.id WHERE token = ?', [$token])->fetch();
     }
 }

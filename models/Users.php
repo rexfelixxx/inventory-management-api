@@ -4,17 +4,33 @@ require_once 'helpers/Databaser.php';
 
 class Users
 {
-    public static function getUser($name)
+    public static function getUser($id, $name)
     {
-        $account = Databaser::runQuery('SELECT * FROM users WHERE BINARY name = ?', [$name]);
+        if (empty($id)) {
+            return Databaser::runQuery('SELECT * FROM users WHERE BINARY name = ?', [$name])->fetch();
+        }
 
-        return $account;
+        return Databaser::runQuery('SELECT * FROM users WHERE BINARY id = ?', [$id])->fetch();
     }
 
-    public static function getAll()
+    public static function all()
     {
-        $data = Databaser::runQuery('SELECT * FROM users');
+        $stmt = Databaser::runQuery('SELECT * FROM users');
 
-        return $data;
+        return $stmt->fetchAll();
+    }
+
+    public static function create($name, $password, $role = 'staff')
+    {
+        $stmt = Databaser::runQuery('INSERT INTO users(name, password, role) VALUES(?, ?, ?)', [$name, $password, $role]);
+
+        return $stmt->rowCount();
+    }
+
+    public static function delete($id)
+    {
+        $stmt = Databaser::runQuery('DELETE FROM users WHERE id = ?', [$id]);
+
+        return $stmt->rowCount();
     }
 }

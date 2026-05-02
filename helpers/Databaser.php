@@ -22,6 +22,6 @@ class Databaser
         $stmt = $pdo->prepare($query);
         $stmt->execute($param);
 
-        return $stmt->fetch();
+        return $stmt;
     }
 }

@@ -8,55 +8,40 @@ require_once 'helpers/Inputter.php';
 
 class UsersController
 {
-    public static function login()
-    {
-        $input = Inputter::getInput();
-        $name = $input->name ?? null;
-        $password = $input->password ?? null;
-        if ((empty($name) or empty($password))) {
-            Responser::bad();
-        }
-
-        $user = Users::getUser($name, $password);
-
-        if (! $user) {
-            Responser::bad();
-        }
-
-        if (password_verify($password, $user['password'])) {
-            $existingToken = Tokens::get($user['id']);
-            $token = Auther::generateToken();
-            if (empty($existingToken)) {
-                Tokens::create($token, $user['id']);
-            } else {
-                Tokens::update($existingToken['id'], $token);
-            }
-            Responser::ok(['token' => $token]);
-        } else {
-            Responser::bad();
-        }
-    }
-
     public static function users()
     {
-        $role = self::auth() ?? null;
-        if (empty($role)) {
-            Responser::bad();
-        }
-        $users = Users::getAll();
+        $users = Users::all();
         Responser::ok($users);
     }
 
-    public static function auth()
+    public static function getUser()
     {
-        $token = Auther::getBearerToken();
-        if (empty($token)) {
+        $input = Inputter::getInput();
+        $stmt = Users::getUser($input->id, null);
+        if (empty($stmt)) {
             Responser::bad();
         }
-        $existingToken = Tokens::getUser($token);
-        if ($existingToken) {
-            Responser::ok($existingToken);
+        Responser::ok($stmt);
+    }
+
+    public static function create()
+    {
+        $role = AuthControllers::auth();
+        $input = Inputter::getInput();
+        $stmt = Users::create($input->name, password_hash($input->password, PASSWORD_DEFAULT), $input->role ?? 'staff');
+        if ($stmt > 0) {
+            Responser::ok(['message' => 'user successfully created', 'role' => $role]);
         }
-        Responser::bad();
+        Responser::bad(['message' => 'cannot create user']);
+    }
+
+    public static function delete()
+    {
+        $input = Inputter::getInput();
+        $stmt = Users::delete($input->id);
+        if ($stmt > 0) {
+            Responser::ok(['message' => 'user successfully deleted']);
+        }
+        Responser::bad(['message' => 'user not found']);
     }
 }
