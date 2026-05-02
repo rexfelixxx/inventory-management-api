@@ -5,7 +5,7 @@ require_once 'models/Users.php';
 require_once 'models/Tokens.php';
 require_once 'helpers/Auther.php';
 require_once 'helpers/Responser.php';
-class AuthControllers
+class AuthController
 {
     public static function login()
     {

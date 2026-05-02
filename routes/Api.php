@@ -2,11 +2,13 @@
 
 require_once 'helpers/Router.php';
 require_once 'controllers/UsersController.php';
-require_once 'controllers/AuthControllers.php';
+require_once 'controllers/AuthController.php';
 
 // ROUTING
 Router::addDefault();
-Router::add('/login', 'POST', [AuthControllers::class, 'login']);
+
+// auth
+Router::add('/login', 'POST', [AuthController::class, 'login']);
 
 // users
 Router::add('/user', 'GET', [UsersController::class, 'users']);
