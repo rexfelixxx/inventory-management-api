@@ -68,19 +68,20 @@ class ItemController
         $message = '';
         foreach($data as $key => $value){
             if(!is_string($key) && !is_string($value)){
-                $message = $message.'\nError: key and value must be the string type';
+                $message = $message.'Error: key and value must be the string type, ';
                 continue;
             }
             if(!Item::isColumnExist($key)){
-                $message = $message.'\nError: Theres no column named "'.$key.'"';
+                $message = $message.'Error: Theres no column named '.$key.', ';
                 continue;
             }
             $result = Item::patch($id, $key, $value);
             if($result > 0)
             {
-                $message = $message.'\nSuccess: changed '.$key.' to '.$value;
+                $message = $message.'Success: changed '.$key.' to '.$value.', ';
             }
         }
+        $message = substr($message, 0, -2);
         Responser::ok($message);
     }
 }
