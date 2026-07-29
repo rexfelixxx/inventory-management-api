@@ -42,12 +42,29 @@ class Item
     public static function patch($id, $name, $value)
     {
         $stmt = Databaser::runQuery('UPDATE item SET '.$name.' = ? WHERE id = ?', [$value, $id]);
+
         return $stmt->rowCount();
     }
 
     public static function isColumnExist($col)
     {
         $stmt = Databaser::runQuery('SHOW COLUMNS FROM item WHERE Field = ?', [$col]);
-        return !empty($stmt->fetch());
+
+        return ! empty($stmt->fetch());
+    }
+
+    public static function increase($id, $quantity)
+    {
+        $stmt = Databaser::runQuery('UPDATE item SET quantity = quantity + ? WHERE id = ?', [$quantity, $id]);
+    }
+
+    public static function decrease($id, $quantity)
+    {
+        $stmt = Databaser::runQuery('UPDATE item SET quantity = quantity - ? WHERE id = ?', [$quantity, $id]);
+    }
+
+    public static function adjust($id, $quantity)
+    {
+        $stmt = Databaser::runQuery('UPDATE item SET quantity = ? WHERE id = ?', [$quantity, $id]);
     }
 }

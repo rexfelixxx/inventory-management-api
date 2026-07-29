@@ -1,6 +1,7 @@
 <?php
 
 require_once 'configs/Database.php';
+require_once 'helpers/Responser.php';
 $dsn = "mysql:host=$host;dbname=$db;charset=$charset";
 $options = [
     PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
@@ -11,7 +12,7 @@ $options = [
 try {
     $pdo = new PDO($dsn, $user, $pass, $options);
 } catch (PDOException $e) {
-    throw new PDOException($e->getMessage(), (int) $e->getCode());
+    Responser::custom(500, 'error', 'Database error.', ['error' => $e->getMessage()]);
 }
 
 class Databaser
@@ -23,5 +24,23 @@ class Databaser
         $stmt->execute($param);
 
         return $stmt;
+    }
+
+    public static function startTransaction()
+    {
+        global $pdo;
+        $pdo->beginTransaction();
+    }
+
+    public static function commit()
+    {
+        global $pdo;
+        $pdo->commit();
+    }
+
+    public static function rollback()
+    {
+        global $pdo;
+        $pdo->rollback();
     }
 }

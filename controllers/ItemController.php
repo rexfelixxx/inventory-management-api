@@ -61,23 +61,28 @@ class ItemController
             Responser::bad('Item id not specified!');
         }
 
-        if (empty(Item::getById($id))) Responser::bad('Theres no item with that id');
+        if (empty(Item::getById($id))) {
+            Responser::bad('Theres no item with that id');
+        }
 
         $data = Inputter::getAllBody();
-        if(empty($data))Responser::bad('You wasting my time');
+        if (empty($data)) {
+            Responser::bad('You wasting my time');
+        }
         $message = '';
-        foreach($data as $key => $value){
-            if(!is_string($key) && !is_string($value)){
+        foreach ($data as $key => $value) {
+            if (! is_string($key) && ! is_string($value)) {
                 $message = $message.'Error: key and value must be the string type, ';
+
                 continue;
             }
-            if(!Item::isColumnExist($key)){
+            if (! Item::isColumnExist($key)) {
                 $message = $message.'Error: Theres no column named '.$key.', ';
+
                 continue;
             }
             $result = Item::patch($id, $key, $value);
-            if($result > 0)
-            {
+            if ($result > 0) {
                 $message = $message.'Success: changed '.$key.' to '.$value.', ';
             }
         }
