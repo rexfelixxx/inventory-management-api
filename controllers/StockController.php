@@ -33,4 +33,16 @@ class StockController
             Responser::bad('Database error: '.$e->getMessage());
         }
     }
+
+public static function get($paths)
+    {
+        $id = $paths[1] ?? null;
+        $limit = $_GET['limit'] ?? null;
+        $offset = $_GET['offset'] ?? null;
+        $userid = $_GET['userid'] ?? null;
+        $itemid = $_GET['itemid'] ?? null;
+
+        $result = Stock::get($id, $limit, $offset, $userid, $itemid);
+        Responser::ok("Success", $result);
+    }
 }
