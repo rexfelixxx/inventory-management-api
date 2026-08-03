@@ -50,19 +50,23 @@ untuk mengambil swmua data item (sangat tidak disaranakan karena dapat menyebabk
 Untuk menghapus data sebuah item. Gunakan `/item/{id}` untuk menghapus itek dengan id {id}.
 
 ## PATCH
-untuk mengupdate sebuah value dari suatu kolom. gunakan `/item/{id}` ganti id dengan id item yang ingin kamu ubah. 
+
+untuk mengupdate sebuah value dari suatu kolom. gunakan `/item/{id}` ganti id dengan id item yang ingin kamu ubah.
 
 Request:
+
 ```json
 {
-    "{key}": "{value}",
-    "{key}": "{value}"
+  "{key}": "{value}",
+  "{key}": "{value}"
 }
 ```
+
 - Ganti `{key}` dengan nama kolom yang ingin kamu ubah, dan `{value}` dengan isi baru untuk kolom tersebut.
 - kamu bisa langsung mengubah beberapa sekaligus dengan format yang sama dibawahnya juga, tidak perlu melakukan requwst berulang.
 
 Resoonse:
+
 ```json
 {
   "status": "ok",
@@ -70,4 +74,3 @@ Resoonse:
   "data": null
 }
 ```
-

@@ -34,7 +34,7 @@ class StockController
         }
     }
 
-public static function get($paths)
+    public static function get($paths)
     {
         $id = $paths[1] ?? null;
         $limit = $_GET['limit'] ?? null;
@@ -43,6 +43,6 @@ public static function get($paths)
         $itemid = $_GET['itemid'] ?? null;
 
         $result = Stock::get($id, $limit, $offset, $userid, $itemid);
-        Responser::ok("Success", $result);
+        Responser::ok('Success', $result);
     }
 }

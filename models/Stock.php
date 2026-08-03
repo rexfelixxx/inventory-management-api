@@ -11,25 +11,36 @@ class Stock
         return $stmt->rowCount();
     }
 
-    public static function get($id, $limit, $offset, $userid, $itemid){
+    public static function get($id, $limit, $offset, $userid, $itemid)
+    {
         $query = 'SELECT * FROM stock_movement ';
         $filters = [];
-        if(!empty($id))
-        {
+        if (! empty($id)) {
             $stmt = Databaser::runQuery($query.'WHERE id = '.$id, []);
+
             return $stmt->fetch();
         }
 
-        if(!empty($userid))array_push($filters, 'user_id = '.$userid);
-        if(!empty($itemid))array_push($filters, 'item_id = '.$itemid);
+        if (! empty($userid)) {
+            array_push($filters, 'user_id = '.$userid);
+        }
+        if (! empty($itemid)) {
+            array_push($filters, 'item_id = '.$itemid);
+        }
 
+        if (! empty($filters)) {
+            $query = $query.'WHERE '.implode(' AND ', $filters);
+        }
 
-        if(!empty($filters))$query = $query.'WHERE '.implode(' AND ', $filters);
-
-        if(!empty($limit))$query = $query.' LIMIT '.$limit;
-        if(!empty($offset))$query = $query.' OFFSET '.$offset;
+        if (! empty($limit)) {
+            $query = $query.' LIMIT '.$limit;
+        }
+        if (! empty($offset)) {
+            $query = $query.' OFFSET '.$offset;
+        }
 
         $stmt = Databaser::runQuery($query, []);
+
         return $stmt->fetchAll();
     }
 }
