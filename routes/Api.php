@@ -27,6 +27,7 @@ Router::add('item', 'PATCH', [ItemController::class, 'patch']);
 
 Router::add('stock', 'POST', [StockController::class, 'create']);
 Router::add('stock', 'GET', [StockController::class, 'get']);
+Router::add('stock', 'DELETE', [StockController::class, 'delete']);
 
 Router::add('login', 'POST', [LoginController::class, 'login']);
 Router::add('logout', 'GET', [LogoutController::class, 'logout']);

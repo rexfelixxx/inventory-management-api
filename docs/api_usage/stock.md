@@ -55,3 +55,7 @@ ada beberapa param yang bisa kamu pakai.
 - `userid`: isinya berupa id user yang membuat stock movement. denngan ini kamu bisa tahu user tertentu membuat perubahan apa saja.
 - `itemid`: isinya beruoa item id. dengan begini kamu bisa tahu item tertentu mengalami perubahan apa saja.
   _Kamu bisa mengkombinasikan semuanya juga_. Contoh `/stock?limit=10&offset=10&userid=4&itemid=8` yang akan mengambil 10 data dari posisi baris ke 10 dan yang dibuat oleh user dengan id 4 dan item dengan id 8. semacam filter sih.
+
+## DELETE
+
+Menghapus stock movement log. csranya tinggal request `/stock/{id}` dan ganti id nya dengan id stock log yang ingin dihapus.

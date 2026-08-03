@@ -18,7 +18,7 @@ class StockController
         $move_at = Inputter::requiredBodyData('move_at');
         Databaser::startTransaction();
         try {
-            Stock::post($item_id, $action, $quantity, $description, $user_id, $move_at);
+            Stock::create($item_id, $action, $quantity, $description, $user_id, $move_at);
 
             if ($action == 'in') {
                 Item::increase($item_id, $quantity);
@@ -44,5 +44,20 @@ class StockController
 
         $result = Stock::get($id, $limit, $offset, $userid, $itemid);
         Responser::ok('Success', $result);
+    }
+
+    public static function delete($paths)
+    {
+        $id = $paths[1] ?? null;
+        if (empty($id)) {
+            Responser::bad('Id not specified');
+        }
+
+        $result = Stock::delete($id);
+        if ($result > 0) {
+            Responser::ok('Stock Log Successfully Deleted');
+        }
+
+        Responser::bad('Failed to delete a stock log, theres no log with that id');
     }
 }
