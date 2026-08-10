@@ -50,4 +50,11 @@ class Stock
 
         return $stmt->rowCount();
     }
+
+    public static function put($id, $item_id, $description, $user_id, $move_at)
+    {
+        $stmt = Databaser::runQuery('UPDATE stock_movement SET item_id = ?, description = ?, user_id = ?, move_at = ? WHERE id = ?', [$item_id, $description, $user_id, $move_at, $id]);
+
+        return $stmt->rowCount();
+    }
 }

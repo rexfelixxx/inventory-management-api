@@ -60,4 +60,23 @@ class StockController
 
         Responser::bad('Failed to delete a stock log, theres no log with that id');
     }
+
+    public static function put($paths)
+    {
+        $id = $paths[1] ?? null;
+        if (empty($id)) {
+            Responser::bad('Id not specified');
+        }
+
+        $item_id = Inputter::requiredBodyData('item_id');
+        $description = Inputter::requiredBodyData('description');
+        $user_id = Inputter::requiredBodyData('user_id');
+        $move_at = Inputter::requiredBodyData('move_at');
+
+        $result = Stock::put($id, $item_id, $description, $user_id, $move_at);
+        if ($result > 0) {
+            Responser::ok('A stock log successfully updated');
+        }
+        Responser::bad('Faled to update a stock log, theres no stock log with that id');
+    }
 }
