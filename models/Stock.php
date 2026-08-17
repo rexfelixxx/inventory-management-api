@@ -57,4 +57,33 @@ class Stock
 
         return $stmt->rowCount();
     }
+
+    public static function patch($id, $action, $quantity)
+    {
+        Databaser::startTransaction();
+        try {
+            $current_log = Databaser::runQuery('SELECT quantity, item_id FROM stock_movement WHERE id = ?', [$id])->fetch();
+            $last_quantity = $current_log['quantity'];
+            $item_id = $current_log['item_id'];
+            Databaser::runQuery('UPDATE stock_movement SET action = ?, quantity = ? WHERE id = ?', [$action, $quantity, $id]);
+            if ($action == 'in') {
+                Databaser::runQuery('UPDATE item SET quantity = quantity - ? + ? WHERE id = ?', [$last_quantity, $quantity, $item_id]);
+            }
+            if ($action == 'out') {
+                Databaser::runQuery('UPDATE item SET quantity = quantity + ? - ? WHERE id = ?', [$last_quantity, $quantity, $item_id]);
+            }
+            if ($action == 'adjustment') {
+                Databaser::runQuery('UPDATE item SET quantity = ? WHERE id = ?', [$quantity, $item_id]);
+            }
+
+            Databaser::commit();
+
+            return true;
+        } catch (PDOException $e) {
+            Databaser::rollback();
+            Responser::bad('Error'.$e->getMessage());
+
+            return false;
+        }
+    }
 }

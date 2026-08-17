@@ -79,4 +79,21 @@ class StockController
         }
         Responser::bad('Faled to update a stock log, theres no stock log with that id');
     }
+
+    public static function patch($paths)
+    {
+        $id = $paths[1] ?? null;
+        if (empty($id)) {
+            Responser::bad('Id not specified');
+        }
+
+        $action = Inputter::requiredBodyData('action');
+        $quantity = Inputter::requiredBodyData('quantity');
+
+        if (Stock::patch($id, $action, $quantity)) {
+            Responser::ok('Updated successfully');
+        }
+
+        Responser::bad('Update failed');
+    }
 }
