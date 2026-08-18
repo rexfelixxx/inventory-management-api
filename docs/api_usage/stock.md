@@ -1,4 +1,13 @@
-# stock
+# STOCK
+
+## ENDPOINT INFORMATION
+
+| Item             | Detail                        |
+| ---------------- | ----------------------------- |
+| Endpoint Path    | /stock                        |
+| Method Available | GET, POST, DELETE, PUT, PATCH |
+| Authentication   | Required                      |
+| Content-Type     | application/json              |
 
 ## POST
 
@@ -59,3 +68,87 @@ ada beberapa param yang bisa kamu pakai.
 ## DELETE
 
 Menghapus stock movement log. csranya tinggal request `/stock/{id}` dan ganti id nya dengan id stock log yang ingin dihapus.
+
+## PUT
+
+    Mengupdate data untuk sebuah baris dalam  tabel stock.
+
+### ROUTE PARAMETER
+
+| Name | Position | Status   | Description        |
+| ---- | -------- | -------- | ------------------ |
+| id   | 1        | Required | id untuk stock log |
+
+### REQUEST
+
+**Request Field**:
+
+| Field       | Type      | Status   | Description                                        |
+| ----------- | --------- | -------- | -------------------------------------------------- |
+| item_id     | integer   | Required | id item yang mengalami perubahan stok              |
+| description | tiny text | Required | deskripsi tentang perubahan stok                   |
+| user_id     | integer   | Required | id user yang bertanggung jawab atas perubahan stok |
+| move_at     | datetime  | required | waktu saat perubahan stok terjadi                  |
+
+**Example**:
+
+```json
+{
+  "item_id": 5,
+  "description": " The description",
+  "user_id": 4,
+  "move_at": "2026-07-13 20:00:00"
+}
+```
+
+### RESPONSE
+
+- status code: `200`
+
+```json
+{
+  "status": "ok",
+  "message": "A stock log successfully updated",
+  "data": null
+}
+```
+
+## PATCH
+
+    Mengupdate sebuah baris dalam table stock_movement. Tapi ini akan mengubah jumlah stok.
+
+### ROUTE PARAMETER
+
+| Name | Position | Status   | Description        |
+| ---- | -------- | -------- | ------------------ |
+| id   | 1        | Required | id untuk stock log |
+
+### REQUEST
+
+**Request Field**:
+
+| Field    | Type                          | Status   | Description                                                           |
+| -------- | ----------------------------- | -------- | --------------------------------------------------------------------- |
+| action   | enum("in"/"out"/"adjustment") | Required | Apa yang terjadi pada stok? penambahan, pengurangan, atau penyesuaian |
+| quantity | integer                       | Required | Berapa banyak terjadinya perubahan tersebut                           |
+
+**Example**:
+
+```json
+{
+  "action": "in",
+  "quantity": 20
+}
+```
+
+### RESPONSE
+
+- status code: `200`
+
+```json
+{
+  "status": "ok",
+  "message": "Updated successfully",
+  "data": null
+}
+```
