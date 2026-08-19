@@ -2,18 +2,30 @@
 
 ## ENDPOINT INFORMATION
 
-| Item             | Detail                        |
-| ---------------- | ----------------------------- |
-| Endpoint Path    | /stock                        |
-| Method Available | GET, POST, DELETE, PUT, PATCH |
-| Authentication   | Required                      |
-| Content-Type     | application/json              |
+Item  | Detail
+---|---
+Endpoint Path  |  /stock
+Method Available | GET, POST, DELETE, PUT, PATCH
+Authentication | Required
+Content-Type | application/json
 
 ## POST
 
-membuat log stock movement baru.
+    Membuat log stock movement baru.
 
-Request:
+### REQUEST
+**Request Field**:
+
+Field | Type | Status | Description
+---|---|---|---
+item_id | integer | Required | id item yang mengalami perubahan stok
+action | enum(`"in"` / `"out"` / `"adjustment"`) | Required |Apa yang terjadi pada stok? penambahan, pengurangan, atau penyesuaian
+quantity | integer | Required | Berapa banyak terjadinya perubahan tersebut
+description | tiny text | Required | deskripsi tentang perubahan stok
+user_id | integer | Required | id user yang bertanggung jawab atas perubahan stok
+move_at | datetime | required | waktu saat perubahan stok terjadi
+
+**Example**:
 
 ```json
 {
@@ -25,16 +37,10 @@ Request:
   "description": "Example"
 }
 ```
-
-- item_id: gunakan id item alih-alih nama item, pastikan ada item dengan id tersebut.
-- action: "in" untuk stok masuk, "out" untuk stok yang keluar, dan "adjustment" yang akan mebgubah total jumlah item di inventory sesuai quantity yang ada di request body.
-- quantity: jumlah item, ini bisa berarti berbagai hal sesuai action yang kamu pilih
-- user_id: user yabg bertabggu jawab atas perubahan stok.
-- move_at: kapan perubahan itu terjadi.
-- description: untuk menjelaskan kenapa stoknya berubah.
-- semua param diatas harus diisi.
-
-Response:
+### RESPONSE
+Request URL | Status Code 
+---|---
+/stock | 200
 
 ```json
 {
@@ -45,53 +51,82 @@ Response:
 ```
 
 ## GET
+    Mengambil data dari table stock.
+    
+### ROUTE PARAMETER
+Name |Position | Status | Description
+---|---|---|---|---
+ id | 1 | Optional | id untuk stock log yang ingin di ambil, digunakan untuk mengambil 1 baris stock log.
+ 
+### QUERY PARAMETER
+**Query Field**:
 
-Kamu bisa mendaoatkan banyak hal disini. ada beberaoa cara untuk menggunakan ini.
+Name | Type | Status | Description
+---|---|---|---|----
+limit | integer | Optional | Membatasi jumlah baris yang diambil, dalam contoh kita cuma mengambil 20 baris
+offset | integer | Optional | Menentukan dari baris mana kita mengambil datanya. **HARUS DIGUNAKAN BERSAMA `limit`**
+itemid | integer | Optional | Hanya mengambil baris yang memiliki id item tertentu, dalam contoh kita memilih semu log yang memiliki id item 2
+userid | integer | Optional | Hanya mengambi baris yang dibuat dengan id tertentu, dalam contoh kita mengambil semua baris yang dibuat oleh user 4
 
-### `/stock`
-
-mengambil semua data stok movement yang ada didatabase. sangat tidak disarankan
-
-### `/stock/{id}`
-
-mengabil stock movement dengan id tersebut.
-
-### `/stock?{param_key}={param_value}`
-
-ada beberapa param yang bisa kamu pakai.
-
-- `limit` dan `offset`: isinya harus berupa angka, kamu bisa menggunakan limit tanpa offset tapi offset tidak bisa digunakan sendiri.
-- `userid`: isinya berupa id user yang membuat stock movement. denngan ini kamu bisa tahu user tertentu membuat perubahan apa saja.
-- `itemid`: isinya beruoa item id. dengan begini kamu bisa tahu item tertentu mengalami perubahan apa saja.
-  _Kamu bisa mengkombinasikan semuanya juga_. Contoh `/stock?limit=10&offset=10&userid=4&itemid=8` yang akan mengambil 10 data dari posisi baris ke 10 dan yang dibuat oleh user dengan id 4 dan item dengan id 8. semacam filter sih.
+### RESPONSE
+Request URL | Status Code 
+---|---
+/stock/5 | 200
+```json
+{
+  "status": "ok",
+  "message": "Success",
+  "data": {
+    "id": 5,
+    "item_id": 5,
+    "action": "in",
+    "quantity": 20,
+    "description": " The descriptionua",
+    "user_id": 4,
+    "created_at": "2026-07-30 19:30:14",
+    "move_at": "2026-07-13 20:00:00"
+  }
+}
+```
 
 ## DELETE
-
-Menghapus stock movement log. csranya tinggal request `/stock/{id}` dan ganti id nya dengan id stock log yang ingin dihapus.
-
-## PUT
-
-    Mengupdate data untuk sebuah baris dalam  tabel stock.
-
+    Menghapus stock movement log.
+    
 ### ROUTE PARAMETER
-
-| Name | Position | Status   | Description        |
-| ---- | -------- | -------- | ------------------ |
-| id   | 1        | Required | id untuk stock log |
+Name |Position | Status | Description
+---|---|---|---|---
+ id | 1 | Required | id untuk stock log yang ingin di hapus
+ 
+### RESPONSE
+Request URL | Status Code 
+---|---
+/stock/5 | 200
+```json
+{
+  "status": "ok",
+  "message": "Stock Log Successfully Deleted",
+  "data": null
+}
+```
+## PUT
+    Mengupdate data untuk sebuah baris dalam  tabel stock.
+    
+### ROUTE PARAMETER
+Name |Position | Status | Description
+---|---|---|---|---
+ id | 1 | Required | id untuk stock log yang ingin di update
 
 ### REQUEST
-
 **Request Field**:
 
-| Field       | Type      | Status   | Description                                        |
-| ----------- | --------- | -------- | -------------------------------------------------- |
-| item_id     | integer   | Required | id item yang mengalami perubahan stok              |
-| description | tiny text | Required | deskripsi tentang perubahan stok                   |
-| user_id     | integer   | Required | id user yang bertanggung jawab atas perubahan stok |
-| move_at     | datetime  | required | waktu saat perubahan stok terjadi                  |
+Field | Type | Status | Description
+---|---|---|---
+item_id | integer | Required | id item yang mengalami perubahan stok
+description | tiny text | Required | deskripsi tentang perubahan stok
+user_id | integer | Required | id user yang bertanggung jawab atas perubahan stok
+move_at | datetime | required | waktu saat perubahan stok terjadi
 
 **Example**:
-
 ```json
 {
   "item_id": 5,
@@ -102,8 +137,9 @@ Menghapus stock movement log. csranya tinggal request `/stock/{id}` dan ganti id
 ```
 
 ### RESPONSE
-
-- status code: `200`
+Request URL | Status Code 
+---|---
+/stock/5 | 200
 
 ```json
 {
@@ -114,26 +150,22 @@ Menghapus stock movement log. csranya tinggal request `/stock/{id}` dan ganti id
 ```
 
 ## PATCH
-
     Mengupdate sebuah baris dalam table stock_movement. Tapi ini akan mengubah jumlah stok.
-
+    
 ### ROUTE PARAMETER
-
-| Name | Position | Status   | Description        |
-| ---- | -------- | -------- | ------------------ |
-| id   | 1        | Required | id untuk stock log |
+Name |Position | Status | Description
+---|---|---|---|---
+ id | 1 | Required | id untuk stock log yang ingin diupdate
 
 ### REQUEST
-
 **Request Field**:
 
-| Field    | Type                          | Status   | Description                                                           |
-| -------- | ----------------------------- | -------- | --------------------------------------------------------------------- |
-| action   | enum("in"/"out"/"adjustment") | Required | Apa yang terjadi pada stok? penambahan, pengurangan, atau penyesuaian |
-| quantity | integer                       | Required | Berapa banyak terjadinya perubahan tersebut                           |
+Field | Type | Status | Description
+---|---|---|---
+action | enum(`"in"` / `"out"` / `"adjustment"`) | Required |Apa yang terjadi pada stok? penambahan, pengurangan, atau penyesuaian
+quantity | integer | Required | Berapa banyak terjadinya perubahan tersebut
 
 **Example**:
-
 ```json
 {
   "action": "in",
@@ -142,11 +174,12 @@ Menghapus stock movement log. csranya tinggal request `/stock/{id}` dan ganti id
 ```
 
 ### RESPONSE
-
-- status code: `200`
+Request URL | Status Code 
+---|---
+/stock/5 | 200
 
 ```json
-{
+ {
   "status": "ok",
   "message": "Updated successfully",
   "data": null
