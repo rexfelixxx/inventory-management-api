@@ -9,6 +9,7 @@ class UserController
 {
     public static function get($paths)
     {
+        Auth::requiredPrivilegeLevel(1);
         $id = $paths[1] ?? null;
         if (! empty($id)) {
             $result = User::getById($id);
@@ -41,6 +42,8 @@ class UserController
 
     public static function delete($paths)
     {
+
+        Auth::requiredPrivilegeLevel(2);
         $id = $paths[1] ?? null;
         if (empty($id)) {
             Responser::bad('User id not specified!');
@@ -56,6 +59,7 @@ class UserController
 
     public static function update($paths)
     {
+        Auth::requiredPrivilegeLevel(2);
         $id = $paths[1] ?? null;
         if (empty($id)) {
             Responser::bad('User id not specified!');

@@ -2,28 +2,29 @@
 
 ## ENDPOINT INFORMATION
 
-Item  | Detail
----|---
-Endpoint Path  |  /stock
-Method Available | GET, POST, DELETE, PUT, PATCH
-Authentication | Required
-Content-Type | application/json
+| Item             | Detail                        |
+| ---------------- | ----------------------------- |
+| Endpoint Path    | /stock                        |
+| Method Available | GET, POST, DELETE, PUT, PATCH |
+| Authentication   | Required                      |
+| Content-Type     | application/json              |
 
 ## POST
 
     Membuat log stock movement baru.
 
 ### REQUEST
+
 **Request Field**:
 
-Field | Type | Status | Description
----|---|---|---
-item_id | integer | Required | id item yang mengalami perubahan stok
-action | enum(`"in"` / `"out"` / `"adjustment"`) | Required |Apa yang terjadi pada stok? penambahan, pengurangan, atau penyesuaian
-quantity | integer | Required | Berapa banyak terjadinya perubahan tersebut
-description | tiny text | Required | deskripsi tentang perubahan stok
-user_id | integer | Required | id user yang bertanggung jawab atas perubahan stok
-move_at | datetime | required | waktu saat perubahan stok terjadi
+| Field       | Type                                    | Status   | Description                                                           |
+| ----------- | --------------------------------------- | -------- | --------------------------------------------------------------------- |
+| item_id     | integer                                 | Required | id item yang mengalami perubahan stok                                 |
+| action      | enum(`"in"` / `"out"` / `"adjustment"`) | Required | Apa yang terjadi pada stok? penambahan, pengurangan, atau penyesuaian |
+| quantity    | integer                                 | Required | Berapa banyak terjadinya perubahan tersebut                           |
+| description | tiny text                               | Required | deskripsi tentang perubahan stok                                      |
+| user_id     | integer                                 | Required | id user yang bertanggung jawab atas perubahan stok                    |
+| move_at     | datetime                                | required | waktu saat perubahan stok terjadi                                     |
 
 **Example**:
 
@@ -37,10 +38,12 @@ move_at | datetime | required | waktu saat perubahan stok terjadi
   "description": "Example"
 }
 ```
+
 ### RESPONSE
-Request URL | Status Code 
----|---
-/stock | 200
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /stock      | 200         |
 
 ```json
 {
@@ -51,27 +54,32 @@ Request URL | Status Code
 ```
 
 ## GET
+
     Mengambil data dari table stock.
-    
+
 ### ROUTE PARAMETER
-Name |Position | Status | Description
----|---|---|---|---
- id | 1 | Optional | id untuk stock log yang ingin di ambil, digunakan untuk mengambil 1 baris stock log.
- 
+
+| Name | Position | Status   | Description                                                                          |
+| ---- | -------- | -------- | ------------------------------------------------------------------------------------ |
+| id   | 1        | Optional | id untuk stock log yang ingin di ambil, digunakan untuk mengambil 1 baris stock log. |
+
 ### QUERY PARAMETER
+
 **Query Field**:
 
-Name | Type | Status | Description
----|---|---|---|----
-limit | integer | Optional | Membatasi jumlah baris yang diambil, dalam contoh kita cuma mengambil 20 baris
-offset | integer | Optional | Menentukan dari baris mana kita mengambil datanya. **HARUS DIGUNAKAN BERSAMA `limit`**
-itemid | integer | Optional | Hanya mengambil baris yang memiliki id item tertentu, dalam contoh kita memilih semu log yang memiliki id item 2
-userid | integer | Optional | Hanya mengambi baris yang dibuat dengan id tertentu, dalam contoh kita mengambil semua baris yang dibuat oleh user 4
+| Name   | Type    | Status   | Description                                                                                                          |
+| ------ | ------- | -------- | -------------------------------------------------------------------------------------------------------------------- |
+| limit  | integer | Optional | Membatasi jumlah baris yang diambil, dalam contoh kita cuma mengambil 20 baris                                       |
+| offset | integer | Optional | Menentukan dari baris mana kita mengambil datanya. **HARUS DIGUNAKAN BERSAMA `limit`**                               |
+| itemid | integer | Optional | Hanya mengambil baris yang memiliki id item tertentu, dalam contoh kita memilih semu log yang memiliki id item 2     |
+| userid | integer | Optional | Hanya mengambi baris yang dibuat dengan id tertentu, dalam contoh kita mengambil semua baris yang dibuat oleh user 4 |
 
 ### RESPONSE
-Request URL | Status Code 
----|---
-/stock/5 | 200
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /stock/5    | 200         |
+
 ```json
 {
   "status": "ok",
@@ -90,17 +98,21 @@ Request URL | Status Code
 ```
 
 ## DELETE
+
     Menghapus stock movement log.
-    
+
 ### ROUTE PARAMETER
-Name |Position | Status | Description
----|---|---|---|---
- id | 1 | Required | id untuk stock log yang ingin di hapus
- 
+
+| Name | Position | Status   | Description                            |
+| ---- | -------- | -------- | -------------------------------------- |
+| id   | 1        | Required | id untuk stock log yang ingin di hapus |
+
 ### RESPONSE
-Request URL | Status Code 
----|---
-/stock/5 | 200
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /stock/5    | 200         |
+
 ```json
 {
   "status": "ok",
@@ -108,25 +120,30 @@ Request URL | Status Code
   "data": null
 }
 ```
+
 ## PUT
+
     Mengupdate data untuk sebuah baris dalam  tabel stock.
-    
+
 ### ROUTE PARAMETER
-Name |Position | Status | Description
----|---|---|---|---
- id | 1 | Required | id untuk stock log yang ingin di update
+
+| Name | Position | Status   | Description                             |
+| ---- | -------- | -------- | --------------------------------------- |
+| id   | 1        | Required | id untuk stock log yang ingin di update |
 
 ### REQUEST
+
 **Request Field**:
 
-Field | Type | Status | Description
----|---|---|---
-item_id | integer | Required | id item yang mengalami perubahan stok
-description | tiny text | Required | deskripsi tentang perubahan stok
-user_id | integer | Required | id user yang bertanggung jawab atas perubahan stok
-move_at | datetime | required | waktu saat perubahan stok terjadi
+| Field       | Type      | Status   | Description                                        |
+| ----------- | --------- | -------- | -------------------------------------------------- |
+| item_id     | integer   | Required | id item yang mengalami perubahan stok              |
+| description | tiny text | Required | deskripsi tentang perubahan stok                   |
+| user_id     | integer   | Required | id user yang bertanggung jawab atas perubahan stok |
+| move_at     | datetime  | required | waktu saat perubahan stok terjadi                  |
 
 **Example**:
+
 ```json
 {
   "item_id": 5,
@@ -137,9 +154,10 @@ move_at | datetime | required | waktu saat perubahan stok terjadi
 ```
 
 ### RESPONSE
-Request URL | Status Code 
----|---
-/stock/5 | 200
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /stock/5    | 200         |
 
 ```json
 {
@@ -150,22 +168,26 @@ Request URL | Status Code
 ```
 
 ## PATCH
+
     Mengupdate sebuah baris dalam table stock_movement. Tapi ini akan mengubah jumlah stok.
-    
+
 ### ROUTE PARAMETER
-Name |Position | Status | Description
----|---|---|---|---
- id | 1 | Required | id untuk stock log yang ingin diupdate
+
+| Name | Position | Status   | Description                            |
+| ---- | -------- | -------- | -------------------------------------- |
+| id   | 1        | Required | id untuk stock log yang ingin diupdate |
 
 ### REQUEST
+
 **Request Field**:
 
-Field | Type | Status | Description
----|---|---|---
-action | enum(`"in"` / `"out"` / `"adjustment"`) | Required |Apa yang terjadi pada stok? penambahan, pengurangan, atau penyesuaian
-quantity | integer | Required | Berapa banyak terjadinya perubahan tersebut
+| Field    | Type                                    | Status   | Description                                                           |
+| -------- | --------------------------------------- | -------- | --------------------------------------------------------------------- |
+| action   | enum(`"in"` / `"out"` / `"adjustment"`) | Required | Apa yang terjadi pada stok? penambahan, pengurangan, atau penyesuaian |
+| quantity | integer                                 | Required | Berapa banyak terjadinya perubahan tersebut                           |
 
 **Example**:
+
 ```json
 {
   "action": "in",
@@ -174,12 +196,13 @@ quantity | integer | Required | Berapa banyak terjadinya perubahan tersebut
 ```
 
 ### RESPONSE
-Request URL | Status Code 
----|---
-/stock/5 | 200
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /stock/5    | 200         |
 
 ```json
- {
+{
   "status": "ok",
   "message": "Updated successfully",
   "data": null

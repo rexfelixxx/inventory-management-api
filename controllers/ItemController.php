@@ -3,11 +3,13 @@
 require_once 'helpers/Inputter.php';
 require_once 'models/Item.php';
 require_once 'helpers/Responser.php';
+require_once 'controllers/AuthController.php';
 
 class ItemController
 {
     public static function create()
     {
+        Auth::requiredPrivilegeLevel(1);
         $sku = strtoupper(Inputter::requiredBodyData('sku'));
         $name = ucwords(strtolower(Inputter::requiredBodyData('name')));
         $category_id = Inputter::getBodyData('category_id') ?? null;
@@ -22,6 +24,7 @@ class ItemController
 
     public static function get($paths)
     {
+        Auth::requiredPrivilegeLevel(1);
         if (! empty($paths[1])) {
             $id = ctype_digit($paths[1]) ? $paths[1] : null;
             $sku = empty($id) ? $paths[1] : null;
@@ -41,6 +44,7 @@ class ItemController
 
     public static function delete($paths)
     {
+        Auth::requiredPrivilegeLevel(1);
         $id = $paths[1] ?? null;
         if (empty($id)) {
             Responser::bad('Item id not specified!');
@@ -56,6 +60,7 @@ class ItemController
 
     public static function patch($paths)
     {
+        Auth::requiredPrivilegeLevel(1);
         $id = $paths[1] ?? null;
         if (empty($id)) {
             Responser::bad('Item id not specified!');

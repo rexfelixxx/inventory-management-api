@@ -5,11 +5,13 @@ require_once 'models/Item.php';
 
 require_once 'helpers/Inputter.php';
 require_once 'helpers/Responser.php';
+require_once 'controllers/AuthController.php';
 
 class StockController
 {
     public static function create()
     {
+        Auth::requiredPrivilegeLevel(1);
         $item_id = Inputter::requiredBodyData('item_id');
         $action = Inputter::requiredBodyData('action');
         $quantity = Inputter::requiredBodyData('quantity');
@@ -36,6 +38,7 @@ class StockController
 
     public static function get($paths)
     {
+        Auth::requiredPrivilegeLevel(1);
         $id = $paths[1] ?? null;
         $limit = $_GET['limit'] ?? null;
         $offset = $_GET['offset'] ?? null;
@@ -48,6 +51,7 @@ class StockController
 
     public static function delete($paths)
     {
+        Auth::requiredPrivilegeLevel(1);
         $id = $paths[1] ?? null;
         if (empty($id)) {
             Responser::bad('Id not specified');
@@ -63,6 +67,7 @@ class StockController
 
     public static function put($paths)
     {
+        Auth::requiredPrivilegeLevel(1);
         $id = $paths[1] ?? null;
         if (empty($id)) {
             Responser::bad('Id not specified');
@@ -82,6 +87,7 @@ class StockController
 
     public static function patch($paths)
     {
+        Auth::requiredPrivilegeLevel(1);
         $id = $paths[1] ?? null;
         if (empty($id)) {
             Responser::bad('Id not specified');

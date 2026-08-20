@@ -4,11 +4,13 @@ require_once 'models/Category.php';
 require_once 'helpers/Responser.php';
 require_once 'helpers/Inputter.php';
 require_once 'helpers/Responser.php';
+require_once 'controllers/AuthController.php';
 
 class CategoryController
 {
     public static function create()
     {
+        Auth::requiredPrivilegeLevel(2);
         $name = Inputter::requiredBodyData('name');
         $result = Category::create($name);
         if ($result > 0) {
@@ -19,6 +21,7 @@ class CategoryController
 
     public static function get($paths)
     {
+        Auth::requiredPrivilegeLevel(1);
         $id = $paths[1] ?? null;
         if (! empty($id)) {
             $result = Category::getById($id);
@@ -35,6 +38,7 @@ class CategoryController
 
     public static function delete($paths)
     {
+        Auth::requiredPrivilegeLevel(1);
         $id = $paths[1] ?? null;
         if (empty($id)) {
             Responser::bad('Category id not specified');
@@ -50,6 +54,7 @@ class CategoryController
 
     public static function update($paths)
     {
+        Auth::requiredPrivilegeLevel(1);
         $id = $paths[1] ?? null;
         if (empty($id)) {
             Responser::bad('Category id not specified');
