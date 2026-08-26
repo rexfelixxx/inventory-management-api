@@ -36,6 +36,7 @@ File-file tersebut menggunakan PascalCase karena perubahan pada isinya dapat men
 Gunakan snake_case untuk menamai folder dan file lainnya yang tidak secara langsung mengubah perilaku API/project.
 
 Contohnya:
+
 ```
 routes/
 controllers/
@@ -155,16 +156,16 @@ Setelah proses selesai, controller membuat response dan mengirimkannya kembali k
 
 Setiap bagian memiliki tanggung jawab yang berbeda:
 
-Komponen| Tanggung Jawab
----|---
-`index.php`| Entry point aplikasi
-`routes/`| Menentukan route dan controller yang digunakan
-`controllers/`| Memproses request dan logika aplikasi
-`models/`| Mengolah data dan berinteraksi dengan database
-`configs/`| Menyediakan konfigurasi aplikasi
-`helpers/`| Menyediakan fungsi pembantu
-`views/`| Tidak digunakan karena project merupakan API
-`docs/`| Dokumentasi teknis
+| Komponen       | Tanggung Jawab                                 |
+| -------------- | ---------------------------------------------- |
+| `index.php`    | Entry point aplikasi                           |
+| `routes/`      | Menentukan route dan controller yang digunakan |
+| `controllers/` | Memproses request dan logika aplikasi          |
+| `models/`      | Mengolah data dan berinteraksi dengan database |
+| `configs/`     | Menyediakan konfigurasi aplikasi               |
+| `helpers/`     | Menyediakan fungsi pembantu                    |
+| `views/`       | Tidak digunakan karena project merupakan API   |
+| `docs/`        | Dokumentasi teknis                             |
 
 Pemisahan ini bertujuan agar perubahan pada satu bagian tidak menyebabkan kode pada bagian lain menjadi terlalu bergantung satu sama lain.
 
@@ -188,10 +189,10 @@ Database terdiri dari lima tabel:
 
 Tabel `category` digunakan untuk menyimpan kategori item.
 
-Field| Type| Keterangan
----|---|---
-`id`| `INT`| Primary key dan auto increment
-`name`| `VARCHAR(100)`| Nama kategori dan unique
+| Field  | Type           | Keterangan                     |
+| ------ | -------------- | ------------------------------ |
+| `id`   | `INT`          | Primary key dan auto increment |
+| `name` | `VARCHAR(100)` | Nama kategori dan unique       |
 
 Kolom `name` memiliki constraint `UNIQUE`, sehingga dua kategori tidak dapat memiliki nama yang sama.
 
@@ -199,14 +200,14 @@ Kolom `name` memiliki constraint `UNIQUE`, sehingga dua kategori tidak dapat mem
 
 Tabel `item` digunakan untuk menyimpan data barang atau item inventory.
 
-Field| Type| Keterangan
----|---|---
-`id`| `INT`| Primary key dan auto increment
-`sku`| `VARCHAR(30)`| SKU item dan unique
-`name`| `VARCHAR(150)`| Nama item
-`category_id`| `INT`| ID kategori
-`description`| `TINYTEXT`| Deskripsi item
-`quantity`| `INT`| Jumlah item
+| Field         | Type           | Keterangan                     |
+| ------------- | -------------- | ------------------------------ |
+| `id`          | `INT`          | Primary key dan auto increment |
+| `sku`         | `VARCHAR(30)`  | SKU item dan unique            |
+| `name`        | `VARCHAR(150)` | Nama item                      |
+| `category_id` | `INT`          | ID kategori                    |
+| `description` | `TINYTEXT`     | Deskripsi item                 |
+| `quantity`    | `INT`          | Jumlah item                    |
 
 `category_id` merupakan foreign key yang mengarah ke `category.id`. Kolom `sku` juga memiliki constraint `UNIQUE`.
 
@@ -214,16 +215,16 @@ Field| Type| Keterangan
 
 Tabel `stock_movement` digunakan untuk mencatat perubahan stok.
 
-Field| Type| Keterangan
----|---|---
-`id`| `INT`| Primary key dan auto increment
-`item_id`| `INT`| ID item
-`action`| `ENUM`| `in`, `out`, atau `adjustment`
-`quantity`| `INT`| Jumlah perubahan
-`description`| `TINYTEXT`| Deskripsi perubahan
-`user_id`| `INT`| ID user yang melakukan perubahan
-`created_at`| `TIMESTAMP`| Waktu record dibuat
-`move_at`| `TIMESTAMP`| Waktu pergerakan stok
+| Field         | Type        | Keterangan                       |
+| ------------- | ----------- | -------------------------------- |
+| `id`          | `INT`       | Primary key dan auto increment   |
+| `item_id`     | `INT`       | ID item                          |
+| `action`      | `ENUM`      | `in`, `out`, atau `adjustment`   |
+| `quantity`    | `INT`       | Jumlah perubahan                 |
+| `description` | `TINYTEXT`  | Deskripsi perubahan              |
+| `user_id`     | `INT`       | ID user yang melakukan perubahan |
+| `created_at`  | `TIMESTAMP` | Waktu record dibuat              |
+| `move_at`     | `TIMESTAMP` | Waktu pergerakan stok            |
 
 `item_id` merupakan foreign key ke `item.id`, sedangkan `user_id` merupakan foreign key ke `user.id`. Kedua foreign key tersebut menggunakan `ON UPDATE CASCADE`.
 
@@ -237,12 +238,12 @@ Nilai `action` dibatasi menjadi tiga jenis:
 
 Tabel `user` digunakan untuk menyimpan data pengguna API.
 
-Field| Type| Keterangan
----|---|---
-`id`| `INT`| Primary key dan auto increment
-`name`| `VARCHAR(100)`| Nama user dan unique
-`password`| `VARCHAR(255)`| Password user
-`role`| `ENUM`| `staff` atau `admin`
+| Field      | Type           | Keterangan                     |
+| ---------- | -------------- | ------------------------------ |
+| `id`       | `INT`          | Primary key dan auto increment |
+| `name`     | `VARCHAR(100)` | Nama user dan unique           |
+| `password` | `VARCHAR(255)` | Password user                  |
+| `role`     | `ENUM`         | `staff` atau `admin`           |
 
 Kolom `name` memiliki constraint `UNIQUE`, sedangkan `role` hanya dapat berisi `staff` atau `admin`.
 
@@ -250,12 +251,12 @@ Kolom `name` memiliki constraint `UNIQUE`, sedangkan `role` hanya dapat berisi `
 
 Tabel `token` digunakan untuk menyimpan authentication token milik user.
 
-Field| Type| Keterangan
----|---|---
-`user_id`| `INT`| ID user
-`token`| `VARCHAR(100)`| Authentication token
-`created_at`| `TIMESTAMP`| Waktu token dibuat
-`expired_at`| `TIMESTAMP`| Waktu token kedaluwarsa
+| Field        | Type           | Keterangan              |
+| ------------ | -------------- | ----------------------- |
+| `user_id`    | `INT`          | ID user                 |
+| `token`      | `VARCHAR(100)` | Authentication token    |
+| `created_at` | `TIMESTAMP`    | Waktu token dibuat      |
+| `expired_at` | `TIMESTAMP`    | Waktu token kedaluwarsa |
 
 `user_id` merupakan foreign key yang mengarah ke `user.id`.
 
@@ -265,12 +266,12 @@ Field| Type| Keterangan
 
 Relasi antar tabel dapat dijelaskan sebagai berikut:
 
-Tabel| Relasi| Tabel Tujuan
----|---|---
-`category`| satu kategori dapat memiliki banyak item| `item`
-`item`| satu item dapat memiliki banyak stock movement| `stock_movement`
-`user`| satu user dapat memiliki banyak token| `token`
-`user`| satu user dapat melakukan banyak stock movement| `stock_movement`
+| Tabel      | Relasi                                          | Tabel Tujuan     |
+| ---------- | ----------------------------------------------- | ---------------- |
+| `category` | satu kategori dapat memiliki banyak item        | `item`           |
+| `item`     | satu item dapat memiliki banyak stock movement  | `stock_movement` |
+| `user`     | satu user dapat memiliki banyak token           | `token`          |
+| `user`     | satu user dapat melakukan banyak stock movement | `stock_movement` |
 
 Foreign key digunakan untuk menghubungkan tabel-tabel tersebut dan menjaga integritas referensial database.
 

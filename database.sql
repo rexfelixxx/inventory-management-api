@@ -1,3 +1,4 @@
+Enter password: 
 /*M!999999\- enable the sandbox mode */ 
 -- MariaDB dump 10.19-12.3.2-MariaDB, for Android (aarch64)
 --
@@ -15,14 +16,6 @@
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
-
---
--- Current Database: `stockdb`
---
-
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `stockdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci */;
-
-USE `stockdb`;
 
 --
 -- Table structure for table `category`
@@ -116,7 +109,6 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_uca1400_ai_ci;
-INSERT INTO user (id, name, password, role) VALUES (0, 'admin', '1234', 'admin');
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -128,4 +120,4 @@ INSERT INTO user (id, name, password, role) VALUES (0, 'admin', '1234', 'admin')
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-08-22 15:23:22
+-- Dump completed on 2026-08-25 13:00:37

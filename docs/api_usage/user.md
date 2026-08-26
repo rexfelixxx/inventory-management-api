@@ -1,10 +1,38 @@
-# user
+# USER
 
-## GET /user/{id}?offset={offset}&limit={limit}
+## ENDPOINT INFORMATION
 
-Metode ini mengambil semua user menggunakan paging jika {id} tidak didefinisikan, kamu bisa mengisi {offset} dan {limit} untuk mensetting paging. {offset} untuk darimana memulai paging, dan {limit} untuk dimana mengakhiri {paging}. Kalau kedua parameter ini tidak diisi secara default offset = 0, dan limit = 20, ini akan mengambil 20 user pertama dari database. Kalau {id} diisi ia akan mengambil sebuah useryang memilki id tersebut.
+| Item             | Detail                 |
+| ---------------- | ---------------------- |
+| Endpoint Path    | /user                  |
+| Method Available | GET, POST, DELETE, PUT |
+| Authentication   | Required               |
+| Content-Type     | application/json       |
 
-Response untuk url /user/{id}
+## GET
+
+    Mengambil data user
+
+### ROUTE PARAMETER
+
+| Name | Position | Status   | Description                |
+| ---- | -------- | -------- | -------------------------- |
+| id   | 1        | Optional | id user yang ingin diambil |
+
+### QUERY PARAMETER
+
+**Query Field**:
+
+| Name   | Type    | Status   | Description                                                                            |
+| ------ | ------- | -------- | -------------------------------------------------------------------------------------- |
+| limit  | integer | Optional | Membatasi jumlah baris yang diambil                                                    |
+| offset | integer | Optional | Menentukan dari baris mana kita mengambil datanya. **HARUS DIGUNAKAN BERSAMA `limit`** |
+
+### RESPONSE
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /user/1     | 200         |
 
 ```json
 {
@@ -18,7 +46,9 @@ Response untuk url /user/{id}
 }
 ```
 
-Response untuk url /user?offset=0&limit=5
+| Request URL            | Status Code |
+| ---------------------- | ----------- |
+| /user?offset=0&limit=5 | 200         |
 
 ```json
 {
@@ -35,10 +65,21 @@ Response untuk url /user?offset=0&limit=5
 }
 ```
 
-## POST /user
+## POST
 
-Membuat akun user baru, harus terautorisasi degan level privilege 2, jadi pastikan untuk menggunakan token login.
-Request:
+    Membuat akun user baru
+
+### REQUEST
+
+**Request Field**:
+
+| Field    | Type                   | Status   | Description                                                 |
+| -------- | ---------------------- | -------- | ----------------------------------------------------------- |
+| name     | varchar                | Required | nama user yang ingin dibuat                                 |
+| password | varchar                | Required | password untuk user yang ingin dibuat                       |
+| role     | enum("admin", "staff") | Optional | Level privilige untuk user tersebut, secara default "staff" |
+
+**Example**:
 
 ```json
 {
@@ -48,9 +89,11 @@ Request:
 }
 ```
 
-- role bersifat opsional, jika tidak diisi otomatis akan terisi dengan "staff".
+### RESPONSE
 
-Response:
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /user       | 200         |
 
 ```json
 {
@@ -61,11 +104,26 @@ Response:
 }
 ```
 
-## PUT /user/{id}
+## PUT
 
-Mengupdate sebuah user yang sudah ada. {id} diisi dengan id user yang ungin di update.
+    Mengupdate sebuah user yang sudah ada.
 
-Request:
+### ROUTE PARAMETER
+
+| Name | Position | Status   | Description                 |
+| ---- | -------- | -------- | --------------------------- |
+| id   | 1        | Required | id user yang ingin diupdate |
+
+### REQUEST
+
+**Request Field**:
+
+| Field    | Type    | Status   | Description              |
+| -------- | ------- | -------- | ------------------------ |
+| name     | varchar | Required | nama user baru           |
+| password | varchar | Required | password baru untuk user |
+
+**Example**
 
 ```json
 {
@@ -74,7 +132,11 @@ Request:
 }
 ```
 
-Response:
+### RESPONSE
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /user/1     | 200         |
 
 ```json
 {
@@ -85,13 +147,21 @@ Response:
 }
 ```
 
-## DELETE /user/{id}
+## DELETE
 
-menghapus user
+    Menghapus user
 
-Request: -
+### ROUTE PARAMETER
 
-Response:
+| Name | Position | Status   | Description                |
+| ---- | -------- | -------- | -------------------------- |
+| id   | 1        | Optional | id user yang ingin dihapus |
+
+### RESPONSE
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /user/1     | 200         |
 
 ```json
 {
