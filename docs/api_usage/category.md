@@ -1,10 +1,25 @@
-# /category
+# CATEGORY
+
+| Item             | Detail                 |
+| ---------------- | ---------------------- |
+| Endpoint Path    | /category              |
+| Method Available | GET, POST, DELETE, PUT |
+| Authentication   | Required               |
+| Content-Type     | application/json       |
 
 ## POST
 
-membuat category baru
+    Membuat category baru
 
-Request:
+### REQUEST
+
+**Request Field**:
+
+| Field | Type    | Status   | Description                    |
+| ----- | ------- | -------- | ------------------------------ |
+| name  | varchar | Required | nama kategori yag ingin dibuat |
+
+**Example**:
 
 ```json
 {
@@ -12,7 +27,11 @@ Request:
 }
 ```
 
-Response:
+### RESPONSE
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /category   | 200         |
 
 ```json
 {
@@ -22,11 +41,30 @@ Response:
 }
 ```
 
-## GET /category/{id}?offset={offset}&limit={limit}
+## GET
 
-Metode ini mengambil semua user menggunakan paging jika {id} tidak didefinisikan, kamu bisa mengisi {offset} dan {limit} untuk mensetting paging. {offset} untuk darimana memulai paging, dan {limit} untuk dimana mengakhiri {paging}. Kalau kedua parameter ini tidak diisi secara default offset = 0, dan limit = 20, ini akan mengambil 20 kategori pertama dari database. Kalau {id} diisi ia akan mengambil sebuah kategori yang memilki id tersebut.
+    Mengambil data kategori
 
-Response untuk url /category/{id}
+### ROUTE PARAMETER
+
+| Name | Position | Status   | Description                    |
+| ---- | -------- | -------- | ------------------------------ |
+| id   | 1        | Optional | id kategori yang ingin diambil |
+
+### QUERY PARAMETER
+
+**Query Field**:
+
+| Name   | Type    | Status   | Description                                                                            |
+| ------ | ------- | -------- | -------------------------------------------------------------------------------------- |
+| limit  | integer | Optional | Membatasi jumlah baris yang diambil                                                    |
+| offset | integer | Optional | Menentukan dari baris mana kita mengambil datanya. **HARUS DIGUNAKAN BERSAMA `limit`** |
+
+### RESPONSE
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /category/1 | 200         |
 
 ```json
 {
@@ -39,7 +77,9 @@ Response untuk url /category/{id}
 }
 ```
 
-Response untuk url /category?offset=0&limit=5
+| Request URL                | Status Code |
+| -------------------------- | ----------- |
+| /category?offset=0&limit=5 | 200         |
 
 ```json
 {
@@ -56,13 +96,21 @@ Response untuk url /category?offset=0&limit=5
 }
 ```
 
-## DELETE /category/{id}
+## DELETE
 
-Mebghaous sebuah kategori, ganti {id} dengan id kategori yang ingin kamu hapus
+    Menghapus sebuah kategori
 
-Request: -
+### ROUTE PARAMETER
 
-Response:
+| Name | Position | Status   | Description                    |
+| ---- | -------- | -------- | ------------------------------ |
+| id   | 1        | Optional | id kategori yang ingin dihapus |
+
+### RESPONSE
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /category/1 | 200         |
 
 ```json
 {
@@ -72,11 +120,25 @@ Response:
 }
 ```
 
-## PUT /category/{id}
+## PUT
 
-Mengupdate nama sebuah kategori, ganti {id} dengan id kategori yang ingin diubah namanya.
+    Mengupdate nama sebuah kategori
 
-Request:
+### ROUTE PARAMETER
+
+| Name | Position | Status   | Description                     |
+| ---- | -------- | -------- | ------------------------------- |
+| id   | 1        | Optional | id kategori yang ingin diupdate |
+
+### REQUEST
+
+**Request Field**:
+
+| Field | Type    | Status   | Description |
+| ----- | ------- | -------- | ----------- |
+| name  | varchar | Required | nama baru   |
+
+**Example**:
 
 ```json
 {
@@ -84,7 +146,11 @@ Request:
 }
 ```
 
-Response:
+### RESPONSE
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /category/1 | 200         |
 
 ```json
 {
