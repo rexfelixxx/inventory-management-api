@@ -1,10 +1,30 @@
-# /item
+# ITEM
+
+## ENDPOINT INFORMATION
+
+| Item             | Detail                   |
+| ---------------- | ------------------------ |
+| Endpoint Path    | /user                    |
+| Method Available | GET, POST, DELETE, PATCH |
+| Authentication   | Required                 |
+| Content-Type     | application/json         |
 
 ## POST
 
-membuat sebuah item baru.
+    Membuat item baru
 
-Request:
+### REQUEST
+
+**Request Field**:
+
+| Field       | Type      | Status   | Description                                      |
+| ----------- | --------- | -------- | ------------------------------------------------ |
+| sku         | varchar   | Required | SKU untuk item yang ingin dibuat, SKU harus unik |
+| name        | varchar   | Required | nama item yang ingin dibuat                      |
+| category_id | integer   | Optional | Id kategori dimana item tersebut dikategorikan   |
+| description | tiny text | Optional | Deskripsi singkat untuk item tersebut            |
+
+**Example**:
 
 ```json
 {
@@ -15,11 +35,11 @@ Request:
 }
 ```
 
-- sku harus unik dan tidak dapat di duplikasi, ia juga akn selalu dalam huruf kapital, meskipun kamu menginput huruf kecil.
-- name akan selalu mengcapitalize huruf pertama dalam sebuah kata dan semua huruf dibelakangnya akan mwnjadi huruf kecil.
-- category_id opsional untuk diisi namun jika mengisi pastikan ada categpry dengan id tersebut.
-- deskripsi bersifat opsional
-  Response:
+### RESPONSE
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /item       | 200         |
 
 ```json
 {
@@ -31,46 +51,109 @@ Request:
 
 ## GET
 
-untuk mengambil data yang ada di tabel item. ada beberapa cara yang bisa kamu lakukan
+    Mengambil data item
 
-### Paging
+### ROUTE PARAMETER
 
-kamu menentukan offset dan limit untuk data yang kamu ambil jadi kamu bisa memilih darimana dan seberapa banyak data yang ingin kamu ambil. contohnya URL **/item?limit=30&offset=10** akan mengambil data dari baris ke 11 sampai ke 30.
+| Name | Position | Status   | Description                |
+| ---- | -------- | -------- | -------------------------- |
+| id   | 1        | Optional | id item yang ingin diambil |
 
-### Path Parameter
+### QUERY PARAMETER
 
-kamu bisa menggunakan id atau sku item untuk melihat informasi tentang item tersebut. contohnya: **/item/5** (mengambil data item dengan id 5) dan **/item/ti-12** (mengambil item dengan sku TI-12). yang membedakan id dengan SKU adalah keberadaan huruf. untuk menggunakan SKU kamu tidak perlu khawatir tentang kapitalisasi karakter, soalnya sku bersifat case insensitive
+**Query Field**:
 
-### All
+| Name   | Type    | Status   | Description                                                                            |
+| ------ | ------- | -------- | -------------------------------------------------------------------------------------- |
+| limit  | integer | Optional | Membatasi jumlah baris yang diambil                                                    |
+| offset | integer | Optional | Menentukan dari baris mana kita mengambil datanya. **HARUS DIGUNAKAN BERSAMA `limit`** |
 
-untuk mengambil swmua data item (sangat tidak disaranakan karena dapat menyebabkan overload sistem), kamu cukup menggunakan route **/item**
+### RESPONSE
 
-## DELETE
-
-Untuk menghapus data sebuah item. Gunakan `/item/{id}` untuk menghapus itek dengan id {id}.
-
-## PATCH
-
-untuk mengupdate sebuah value dari suatu kolom. gunakan `/item/{id}` ganti id dengan id item yang ingin kamu ubah.
-
-Request:
-
-```json
-{
-  "{key}": "{value}",
-  "{key}": "{value}"
-}
-```
-
-- Ganti `{key}` dengan nama kolom yang ingin kamu ubah, dan `{value}` dengan isi baru untuk kolom tersebut.
-- kamu bisa langsung mengubah beberapa sekaligus dengan format yang sama dibawahnya juga, tidak perlu melakukan requwst berulang.
-
-Resoonse:
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /item/5     | 200         |
 
 ```json
 {
   "status": "ok",
-  "message": "Success: changed Key to Value",
+  "message": "successfuly find item",
+  "data": {
+    "id": 5,
+    "sku": "TI-2",
+    "name": "Test Item Dua",
+    "category_id": null,
+    "description": null,
+    "quantity": 20
+  }
+}
+```
+
+## DELETE
+
+    Menghapus user
+
+### ROUTE PARAMETER
+
+| Name | Position | Status   | Description                |
+| ---- | -------- | -------- | -------------------------- |
+| id   | 1        | Optional | id item yang ingin dihapus |
+
+### RESPONSE
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /item/5     | 200         |
+
+```json
+{
+  "status": "ok",
+  "data": {
+    "message": "item successfully deleted"
+  }
+}
+```
+
+## PATCH
+
+    Mengupdate data suatu item
+
+### ROUTE PARAMETER
+
+| Name | Position | Status   | Description                 |
+| ---- | -------- | -------- | --------------------------- |
+| id   | 1        | Optional | id item yang ingin diupdate |
+
+### REQUEST
+
+**Request Field**:
+
+| Field       | Type      | Status   | Description                                      |
+| ----------- | --------- | -------- | ------------------------------------------------ |
+| sku         | varchar   | Optional | SKU untuk item yang ingin dibuat, SKU harus unik |
+| name        | varchar   | Optional | nama item yang ingin dibuat                      |
+| category_id | integer   | Optional | Id kategori dimana item tersebut dikategorikan   |
+| description | tiny text | Optional | Deskripsi singkat untuk item tersebut            |
+
+**Example**:
+
+```json
+{
+  "notexist": "testing",
+  "name": "Changed"
+}
+```
+
+### RESPONSE
+
+| Request URL | Status Code |
+| ----------- | ----------- |
+| /item/5     | 200         |
+
+```json
+{
+  "status": "ok",
+  "message": "Error: Theres no column named notexist, Success: changed name to Changed",
   "data": null
 }
 ```

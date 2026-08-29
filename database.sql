@@ -18,6 +18,14 @@ Enter password:
 /*M!100616 SET @OLD_NOTE_VERBOSITY=@@NOTE_VERBOSITY, NOTE_VERBOSITY=0 */;
 
 --
+-- Current Database: `stockdb`
+--
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `stockdb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_uca1400_ai_ci */;
+
+USE `stockdb`;
+
+--
 -- Table structure for table `category`
 --
 
@@ -120,4 +128,4 @@ CREATE TABLE `user` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*M!100616 SET NOTE_VERBOSITY=@OLD_NOTE_VERBOSITY */;
 
--- Dump completed on 2026-08-25 13:00:37
+-- Dump completed on 2026-08-29 13:23:55
